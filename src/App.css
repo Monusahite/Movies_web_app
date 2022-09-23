@@ -60,3 +60,27 @@
   color: white;
 }
 
+.movies-list{
+  display: flex;
+  justify-content: center;
+  flex-wrap:wrap;
+  padding: 1rem;
+}
+.movie-card{
+  position: relative;
+  margin:1rem;
+  border: none;
+}
+.movie-title{
+  position: absolute;
+  color: white;
+  top:1rem;
+  left:1rem;
+}
+.movie-img{
+  border-bottom-right-radius: 1rem;
+}
+.movies-button{
+  position: absolute;
+  bottom: 2rem;
+}
