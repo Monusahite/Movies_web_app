@@ -10,6 +10,7 @@ class MovieList extends Component {
             pArr:[1],
             movies:[],
             currPage:1,
+            favourites:[],
         }
     }
     async componentDidMount(){
@@ -44,6 +45,26 @@ class MovieList extends Component {
             currPage:this.state.currPage+1,
         },this.changeMovies)
     }
+
+    handleFavourites = (movieObj)=>{
+        let oldData = JSON.parse(localStorage.getItem('movies-app') || '[]')
+        if(this.state.favourites.includes(movieObj.id)){
+            oldData = oldData.filter((movie)=>movie.id!=movieObj.id)
+        }else{
+            oldData.push(movieObj)
+        }
+        localStorage.setItem("movies-app",JSON.stringify(oldData));
+        this.handleFavouritesState();
+    }
+
+    handleFavouritesState = ()=>{
+        let oldData = JSON.parse(localStorage.getItem('movies-app')|| '[]')
+        let temp = oldData.map((movie)=>movie.id);
+        this.setState({
+            favourites:[...temp]
+        })
+    }
+
     render() {
         let movieArr = movies.results;
         return (
@@ -61,7 +82,11 @@ class MovieList extends Component {
 
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 {
-                                    this.state.hover == movieEle.id && (<a href="#" className="btn btn-primary movies-button">Add To Favourites</a>
+                                    this.state.hover == movieEle.id && (<a className="btn btn-primary movies-button" onClick={()=>this.handleFavourites(movieEle)}>
+                                       
+                                       {this.state.favourites.includes(movieEle.id)?'Remove from Favourites':'Add To Favourites'}
+                                       
+                                        </a>
                                     ) 
                                 }
 
@@ -71,11 +96,11 @@ class MovieList extends Component {
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <nav aria-label="Page navigation example">
                             <ul className="pagination">
-                                <li className="page-item"><a className="page-link" onClick={this.handlePrevious} href="#a">Previous</a></li>
+                                <li className="page-item"><a className="page-link" onClick={this.handlePrevious} >Previous</a></li>
                                 {this.state.pArr.map((ele)=>(
-                                    <li className="page-item" key={ele} onClick={() => this.handlePage(ele)}><a className="page-link"  href="#a">{ele}</a></li>
+                                    <li className="page-item" key={ele} onClick={() => this.handlePage(ele)}><a className="page-link" >{ele}</a></li>
                                 ))}
-                                <li className="page-item"><a className="page-link" onClick={this.handleNext} href="#a">Next</a></li>
+                                <li className="page-item"><a className="page-link" onClick={this.handleNext} >Next</a></li>
                             </ul>
                         </nav>
                     </div>

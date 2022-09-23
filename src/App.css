@@ -90,3 +90,6 @@
 .fav-table{
   padding-top:3rem;
 }
+.genre{
+  cursor: pointer;
+}
