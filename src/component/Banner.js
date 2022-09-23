@@ -7,7 +7,6 @@ class Banner extends Component {
         super();
         this.state = {
             movie:"",
-
         }
     }
     async componentDidMount(){
