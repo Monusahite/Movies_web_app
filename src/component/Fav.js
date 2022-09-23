@@ -66,9 +66,8 @@ class Fav extends Component {
             })
         }
         else {
-            let data = JSON.parse(localStorage.getItem('movies-app') || '[]')
             this.setState({
-                movies: [...data],
+                movies: [...this.state.movies2],
             })
         }
 
@@ -80,7 +79,6 @@ class Fav extends Component {
     }
     sortPopularityDesc =()=>{
         let temp =this.state.movies.map((movieObj)=>movieObj);
-        console.log(temp)
         temp.sort(function(objA,objB){
             return objA.popularity - objB.popularity;
         })
@@ -91,7 +89,6 @@ class Fav extends Component {
     }
     sortPopularityInc =()=>{
         let temp =this.state.movies.map((movieObj)=>movieObj);
-        console.log(temp)
         temp.sort(function(objA,objB){
             return objB.popularity - objA.popularity;
         })
@@ -102,7 +99,6 @@ class Fav extends Component {
     }
     sortRatingInc =()=>{
         let temp =this.state.movies.map((movieObj)=>movieObj);
-        console.log(temp)
         temp.sort(function(objA,objB){
             return objB.vote_average - objA.vote_average;
         })
@@ -114,7 +110,6 @@ class Fav extends Component {
     }
     sortRatingDesc =()=>{
         let temp =this.state.movies.map((movieObj)=>movieObj);
-        console.log(temp)
         temp.sort(function(objA,objB){
             return objA.vote_average - objB.vote_average;
         })
@@ -124,10 +119,15 @@ class Fav extends Component {
         })
        
     }
-   
+    handleDelete =(id)=>{
+        let temp = JSON.parse(localStorage.getItem('movie-app'));
+        temp = temp.filter((movie)=>{
+            return movie.id != id;
+        })
+    }
     render() {
         let genreIds = { 28: "Action", 12: "Adventure", 16: "Animation", 35: "Comedy", 80: "Crime", 99: "Documentary", 18: "Drama", 10751: "Family", 14: "Fantasy", 36: "History", 27: "Horror", 10402: "Music", 9648: "Mystery", 10749: "Romance", 878: "Science Fiction", 10770: "TV Movie", 53: "Thriller", 10752: "War", 37: "Western" }
-
+        
         return (
 
             <div className="container text-center">
@@ -175,7 +175,7 @@ class Fav extends Component {
                                         <td>{genreIds[movieEle.genre_ids[0]]}</td>
                                         <td>{movieEle.popularity}</td>
                                         <td>{movieEle.vote_average}</td>
-                                        <td><a type="button" class="btn btn-danger">Delete</a></td>
+                                        <td><a type="button" onClick={()=>this.handleDelete(movieEle.id)} class="btn btn-danger">Delete</a></td>
                                     </tr>
 
                                 ))}

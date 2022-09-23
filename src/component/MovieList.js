@@ -18,6 +18,13 @@ class MovieList extends Component {
         this.setState({
             movies:[...res.data.results]
         })
+        let movies = JSON.parse(localStorage.getItem("movies-app") || '[]');
+        let temp = movies.map((movie)=>{
+            return movie.id;
+        })
+        this.setState({
+            favourites:[...temp]
+        })
     }
     async changeMovies(){
         const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=84d9ea6d99b38863f7d41e7d9074ad62&language=en-US&page=${this.state.currPage}`)
@@ -64,9 +71,9 @@ class MovieList extends Component {
             favourites:[...temp]
         })
     }
-
     render() {
         let movieArr = movies.results;
+        console.log(this.state.favourites)
         return (
             <>
                 <div>
@@ -84,11 +91,11 @@ class MovieList extends Component {
                                 {
                                     this.state.hover == movieEle.id && (<a className="btn btn-primary movies-button" onClick={()=>this.handleFavourites(movieEle)}>
                                        
-                                       {this.state.favourites.includes(movieEle.id)?'Remove from Favourites':'Add To Favourites'}
-                                       
+                                    { 
+                                         this.state.favourites.includes(movieEle.id)?'Remove from Favourites':'Add To Favourites' }
                                         </a>
                                     ) 
-                                }
+                                }  
 
                             </div>
                         </div>
