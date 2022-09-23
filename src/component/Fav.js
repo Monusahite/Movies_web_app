@@ -2,72 +2,146 @@ import { Component } from "react";
 // import { movies } from '../movieData';
 
 class Fav extends Component {
-     constructor(){
+    constructor() {
         super();
-        this.state ={
-            genres:[],
-            currgenre:"All genres",
-            movies:[],
+        this.state = {
+            genres: [],
+            currgenre: "All genres",
+            movies: [],
+            movies2: [],
+            currText: "",
         }
-     }
+    }
 
-    componentDidMount(){
-        let genreIds = { 28: "Action", 12: "Adventure", 16: "Animation", 35: "Comedy", 80: "Crime", 99: "Documentary", 18: "Drama", 10751: "Family", 14: "Fantasy", 36: "History", 27: "Horror", 10402: "Music", 9648: "Mystery", 10749: "Romance", 878: "Science Fiction", 10770: "TV Movie", 53: "Thriller", 10752: "War", 37: "Western"}
+    componentDidMount() {
+        let genreIds = { 28: "Action", 12: "Adventure", 16: "Animation", 35: "Comedy", 80: "Crime", 99: "Documentary", 18: "Drama", 10751: "Family", 14: "Fantasy", 36: "History", 27: "Horror", 10402: "Music", 9648: "Mystery", 10749: "Romance", 878: "Science Fiction", 10770: "TV Movie", 53: "Thriller", 10752: "War", 37: "Western" }
         let data = JSON.parse(localStorage.getItem("movies-app") || '[]'); //movies
         let tempArr = [];
         tempArr.push("All genres")
-        data.map((movieObj)=>{
-            if(!tempArr.includes(genreIds[movieObj.genre_ids[0]])){
+        data.map((movieObj) => {
+            if (!tempArr.includes(genreIds[movieObj.genre_ids[0]])) {
                 tempArr.push(genreIds[movieObj.genre_ids[0]])
             }
         })
-        
+
         this.setState({
-            movies:[...data],
-            // movies2:[...data],
-            genres:[...tempArr]
+            movies: [...data],
+            movies2: [...data],
+            genres: [...tempArr]
         })
-        
+
     }
-    handleChangeGenre =(genre)=>{
+    handleChangeGenre = (genre) => {
         this.setState({
-            currgenre:genre,
-        },this.filterMovies)
+            currgenre: genre,
+        }, this.filterMovies)
     }
-    filterMovies =()=>{
-        let genreIds = { 28: "Action", 12: "Adventure", 16: "Animation", 35: "Comedy", 80: "Crime", 99: "Documentary", 18: "Drama", 10751: "Family", 14: "Fantasy", 36: "History", 27: "Horror", 10402: "Music", 9648: "Mystery", 10749: "Romance", 878: "Science Fiction", 10770: "TV Movie", 53: "Thriller", 10752: "War", 37: "Western"}
+    filterMovies = () => {
+        let genreIds = { 28: "Action", 12: "Adventure", 16: "Animation", 35: "Comedy", 80: "Crime", 99: "Documentary", 18: "Drama", 10751: "Family", 14: "Fantasy", 36: "History", 27: "Horror", 10402: "Music", 9648: "Mystery", 10749: "Romance", 878: "Science Fiction", 10770: "TV Movie", 53: "Thriller", 10752: "War", 37: "Western" }
         let data = JSON.parse(localStorage.getItem("movies-app") || '[]'); //movies
-        if(this.state.currgenre == "All genres"){
+        if (this.state.currgenre == "All genres") {
             this.setState({
-                movies:[...data],
+                movies: [...data],
+                movies2: [...data],
             })
         }
-        else{
-            let filterMovies = data.filter((movieObj)=>(
-                    genreIds[movieObj.genre_ids[0]] == this.state.currgenre
+        else {
+            let filterMovies = data.filter((movieObj) => (
+                genreIds[movieObj.genre_ids[0]] == this.state.currgenre
             ))
             this.setState({
-                movies:[...filterMovies],
+                movies: [...filterMovies],
+                movies2: [...filterMovies],
             })
         }
     }
+    searchMovies = () => {
+        if (this.state.currText != "") {
+            let filterArr = this.state.movies2.filter((movieObj) => {
+                let title = movieObj.original_title.toLowerCase();
+                return title.includes(this.state.currText.toLowerCase());
+            })
+            this.setState({
+                movies: [...filterArr],
+            })
+        }
+        else {
+            let data = JSON.parse(localStorage.getItem('movies-app') || '[]')
+            this.setState({
+                movies: [...data],
+            })
+        }
 
+    }
+    handleCurrText = (inputValue) => {
+        this.setState({
+            currText: inputValue,
+        }, this.searchMovies)
+    }
+    sortPopularityDesc =()=>{
+        let temp =this.state.movies.map((movieObj)=>movieObj);
+        console.log(temp)
+        temp.sort(function(objA,objB){
+            return objA.popularity - objB.popularity;
+        })
+        this.setState({
+            movies:[...temp],
+            movies2:[...temp]
+        })
+    }
+    sortPopularityInc =()=>{
+        let temp =this.state.movies.map((movieObj)=>movieObj);
+        console.log(temp)
+        temp.sort(function(objA,objB){
+            return objB.popularity - objA.popularity;
+        })
+        this.setState({
+            movies:[...temp],
+            movies2:[...temp]
+        })
+    }
+    sortRatingInc =()=>{
+        let temp =this.state.movies.map((movieObj)=>movieObj);
+        console.log(temp)
+        temp.sort(function(objA,objB){
+            return objB.vote_average - objA.vote_average;
+        })
+        this.setState({
+            movies:[...temp],
+            movies2:[...temp]
+        })
+       
+    }
+    sortRatingDesc =()=>{
+        let temp =this.state.movies.map((movieObj)=>movieObj);
+        console.log(temp)
+        temp.sort(function(objA,objB){
+            return objA.vote_average - objB.vote_average;
+        })
+        this.setState({
+            movies:[...temp],
+            movies2:[...temp]
+        })
+       
+    }
+   
     render() {
         let genreIds = { 28: "Action", 12: "Adventure", 16: "Animation", 35: "Comedy", 80: "Crime", 99: "Documentary", 18: "Drama", 10751: "Family", 14: "Fantasy", 36: "History", 27: "Horror", 10402: "Music", 9648: "Mystery", 10749: "Romance", 878: "Science Fiction", 10770: "TV Movie", 53: "Thriller", 10752: "War", 37: "Western" }
+
         return (
-            
+
             <div className="container text-center">
                 <div className="row">
                     <div className="col-3">
                         <ul className="list-group genere-selector">
                             {this.state.genres.map((genre) => (
-                                this.state.currgenre == genre ?(<li className="list-group-item active genre">{genre}</li>):(<li onClick={()=>this.handleChangeGenre(genre)}className="list-group-item genre">{genre}</li>)
+                                this.state.currgenre == genre ? (<li className="list-group-item active genre">{genre}</li>) : (<li onClick={() => this.handleChangeGenre(genre)} className="list-group-item genre">{genre}</li>)
                             ))}
                         </ul>
                     </div>
                     <div className="col-9 fav-table">
                         <div className="row">
-                            <input type="text" className="form-control col" placeholder="search" />
+                            <input type="text text-center" value={this.state.currText} onChange={(e) => this.handleCurrText(e.target.value)} className="form-control col" placeholder="search" />
                             <input type="text" className="form-control col" />
 
                         </div>
@@ -76,8 +150,18 @@ class Fav extends Component {
                                 <tr>
                                     <th scope="col">Title</th>
                                     <th scope="col">Genre</th>
-                                    <th scope="col">Popularity</th>
-                                    <th scope="col">Rating</th>
+                                    <th scope="col">
+                                        <i class="fa fa-sort-up" onClick={this.sortPopularityInc}></i>
+                                        Popularity
+                                        <i class="fa fa-sort-down" onClick={this.sortPopularityDesc}></i>
+                                    </th>
+                                    <th scope="col">
+                                       
+                                        <i class="fa fa-sort-up" onClick={this.sortRatingInc}></i>
+                                        Rating
+                                        <i class="fa fa-sort-down" onClick={this.sortRatingDesc} ></i>
+                                        
+                                    </th>
                                     <th scope="col">Delete</th>
                                 </tr>
                             </thead>
