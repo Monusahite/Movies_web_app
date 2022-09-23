@@ -5,8 +5,21 @@ class MovieList extends Component {
     constructor(){
         super();
         this.state={
-            hover:""
+            hover:"",
+            pArr:[1,2,3,4,5]
         }
+    }
+
+    handleNext = ()=>{
+        this.setState({
+            parr:this.state.pArr.push(this.state.pArr.length+1)
+        })
+    }
+    handlePrevious = ()=>{
+        if(this.state.pArr.length>1)
+        this.setState({
+            parr:this.state.pArr.pop()
+        })
     }
     render() {
         let movieArr = movies.results;
@@ -32,14 +45,14 @@ class MovieList extends Component {
                             </div>
                         </div>
                     ))}
-                    <div className="pagination_style ">
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <nav aria-label="Page navigation example">
                             <ul className="pagination">
-                                <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-                                <li className="page-item"><a className="page-link" href="#">1</a></li>
-                                <li className="page-item"><a className="page-link" href="#">2</a></li>
-                                <li className="page-item"><a className="page-link" href="#">3</a></li>
-                                <li className="page-item"><a className="page-link" href="#">Next</a></li>
+                                <li className="page-item"><a className="page-link" onClick={this.handlePrevious} href="#a">Previous</a></li>
+                                {this.state.pArr.map((ele)=>(
+                                    <li className="page-item" key={ele}><a className="page-link"  href="#a">{ele}</a></li>
+                                ))}
+                                <li className="page-item"><a className="page-link" onClick={this.handleNext} href="#a">Next</a></li>
                             </ul>
                         </nav>
                     </div>
