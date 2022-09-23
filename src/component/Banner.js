@@ -2,7 +2,7 @@ import { Component } from "react";
 import {movies} from '../movieData'
 class Banner extends Component {
     render() {
-         let movie = movies.results[0]
+         let movie = movies.results[Math.floor(Math.random()*10)]
         return (
             <div className="card banner-card">
                 <img src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`} className="card-img-top banner-img" alt="..." />
