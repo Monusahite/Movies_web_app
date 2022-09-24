@@ -134,8 +134,8 @@
 }
 .navbar{
   display: flex;
-  justify-content: space-around;
   align-items: center;
+  padding-top:1%;
 }
 .nav-link{
   display: flex;
@@ -148,13 +148,37 @@
 .homebtn{
   font-size: x-large;
 }
+.search-card{
+  margin-bottom: 0.5rem;
+}
 .modal{
-  
+
   background-color: white;
-  width: 18rem;
-  height: auto;
+  width: 25rem;
+  height: 40rem;
+  box-sizing: border-box;
+  overflow-y: scroll; 
+  padding: 1rem;
+
+  /* scroll-behavior: smooth; */
+  /* Add the ability to scroll */
   left:50%;
   top:8rem;
-  position: absolute;
   border-radius: 1rem;
+  z-index: 1rem;
+  position: absolute;
+}
+.modal::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.modal{
+-ms-overflow-style: none;  /* IE and Edge */
+scrollbar-width: none;  /* Firefox */
+}
+.search-bar{
+  position: absolute;
+  top:2%;
+  right: 5%;
 }

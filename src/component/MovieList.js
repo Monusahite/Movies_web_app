@@ -11,6 +11,7 @@ class MovieList extends Component {
             movies:[],
             currPage:1,
             favourites:[],
+            searchMovie:[],
         }
     }
     async componentDidMount(){
@@ -63,7 +64,42 @@ class MovieList extends Component {
         localStorage.setItem("movies-app",JSON.stringify(oldData));
         this.handleFavouritesState();
     }
+    async searchMovie(title) {
+        let temp = [];
+        
+        const ModalCont = document.querySelector(".modal");
+        const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=84d9ea6d99b38863f7d41e7d9074ad62&language=en-US&page=1`);
+        
+        temp = res.data.results.filter((movieObj) => {
+            let title2= movieObj.original_title.toLowerCase();
+            return title2.includes(title.toLowerCase())
+        })
+        this.setState({
+            searchMovie:[...temp],
+        })
+        console.log("temp")
+        console.log(this.state.searchMovie)
+        if(temp.length>0){
+           ModalCont.style.display = "block";
+        }
+    }
 
+
+    handleCurrText = (textValue) => {
+        const ModalCont = document.querySelector(".modal");
+        this.setState({
+            currText: textValue
+        })
+        if (textValue == "") {
+            ModalCont.style.display = "none";
+        }
+    }
+    handleSearch = () => {
+        // console.log(this.state.currText);
+        if (this.state.currText != "")
+        this.searchMovie(this.state.currText);
+    }
+   
     handleFavouritesState = ()=>{
         let oldData = JSON.parse(localStorage.getItem('movies-app')|| '[]')
         let temp = oldData.map((movie)=>movie.id);
@@ -85,6 +121,27 @@ class MovieList extends Component {
             <>
                 <div>
                     <h2 className="text-center"><strong>Trending</strong></h2>
+                </div>
+                <nav className="navbar search-bar navbar-expand bg-light">
+                    <input className="form-control me-2" type="search" placeholder="Search" value={this.state.currText} onChange={(e)=>this.handleCurrText(e.target.value)} aria-label="Search" />
+                    <a className="btn btn-outline-success" onClick={this.handleSearch} >Search</a>
+                </nav>
+                <div className="modal">
+                    {this.state.searchMovie.map((movieObj)=>(
+
+                <div className="card">
+                    <img src={`https://image.tmdb.org/t/p/original${movieObj.backdrop_path}`} className="card-img-top" alt="..."/>
+                        <div className="card-body">
+                            <h5 className="card-title">{movieObj.original_title}</h5>
+                            <p className="card-text">{movieObj.overview}</p>
+                            <h5>Rating
+                          <p class={`card-text ${this.getcolor(movieObj.vote_average)}`}>{movieObj.vote_average}</p>
+                          </h5>
+                            <a type="button" className="btn btn-primary" onClick={() => this.handleFav(movieObj)}>
+                                        {this.state.favourites.includes(movieObj.id) ? "Remove Favourite" : "Add Favourite"}</a>
+                        </div>
+                </div>
+                    ))}
                 </div>
                 <div className="movielist">
 
