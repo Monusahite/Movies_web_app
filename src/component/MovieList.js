@@ -71,38 +71,49 @@ class MovieList extends Component {
             favourites:[...temp]
         })
     }
+       getcolor = (rating)=>{
+       if(rating>=8)
+       return "green";
+       else if(rating>5)
+       return "orange";
+       else
+       return "red";
+   }
+
     render() {
-        let movieArr = movies.results;
-        console.log(this.state.favourites)
         return (
             <>
                 <div>
-                    <h3 className="text-center"><strong>Trending</strong></h3>
+                    <h2 className="text-center"><strong>Trending</strong></h2>
                 </div>
-                <div className="movies-list">
+                <div className="movielist">
 
                     {this.state.movies.map((movieEle) => (
 
-                        <div className="card movie-card"onMouseEnter={()=>this.setState({hover:movieEle.id})}>
-                            <img style={{ height: "40vh", width: "20vw" }} src={`https://image.tmdb.org/t/p/original${movieEle.backdrop_path}`} className="card-img-top movie-img" alt="..." />
-                            <h5 className="card-title movie-title">{movieEle.original_title}</h5>
+                        <div className="card allmoviecards"onMouseEnter={()=>this.setState({hover:movieEle.id})}>
+                            <img src={`https://image.tmdb.org/t/p/original${movieEle.backdrop_path}`} className="movie-img" alt="..." />
+                            <h3 className="card-title movie-title">{movieEle.original_title}</h3>
 
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 {
                                     this.state.hover == movieEle.id && (<a className="btn btn-primary movies-button" onClick={()=>this.handleFavourites(movieEle)}>
                                        
                                     { 
-                                         this.state.favourites.includes(movieEle.id)?'Remove from Favourites':'Add To Favourites' }
+                                         this.state.favourites.includes(movieEle.id)?'Remove  Favourites':'Add Favourites' }
                                         </a>
                                     ) 
+
                                 }  
+                                        <h5 className="movie-rating">Rating:<p className={` ${this.getcolor(movieEle.vote_average)}`}>{movieEle.vote_average}</p></h5>
+ 
 
                             </div>
                         </div>
                     ))}
+                    </div>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <nav aria-label="Page navigation example">
-                            <ul className="pagination">
+                            < ul className="pagination">
                                 <li className="page-item"><a className="page-link" onClick={this.handlePrevious} >Previous</a></li>
                                 {this.state.pArr.map((ele)=>(
                                     <li className="page-item" key={ele} onClick={() => this.handlePage(ele)}><a className="page-link" >{ele}</a></li>
@@ -110,7 +121,6 @@ class MovieList extends Component {
                                 <li className="page-item"><a className="page-link" onClick={this.handleNext} >Next</a></li>
                             </ul>
                         </nav>
-                    </div>
 
                 </div>
             </>

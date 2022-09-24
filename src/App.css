@@ -42,10 +42,13 @@
   margin-bottom:2vh;
   position: relative;
   height: 70vh;
+  border: none;
 }
 .banner-img{
   width: 100%;
-  height: 70vh;
+    padding: 1rem;
+    border-radius: 2rem;
+    height: 70vh;
 }
 .banner-title{
   position: absolute; 
@@ -55,16 +58,22 @@
 }
 .banner-text{
   position: absolute; 
-  top:55vh;
+  top:50vh;
   left:5vh;
+  width: 90%;
   color: white;
 }
 
-.movies-list{
-  display: flex;
-  justify-content: center;
-  flex-wrap:wrap;
-  padding: 1rem;
+
+.allmoviecards{
+  position: relative;
+  width: 40vh;
+  height: 35vh;
+  border: none;
+  
+  margin: 2vw;
+  /* transition: transform 450ms; */
+  /* z-index: 3;   */
 }
 .movie-card{
   position: relative;
@@ -77,12 +86,32 @@
   top:1rem;
   left:1rem;
 }
-.movie-img{
-  border-bottom-right-radius: 1rem;
-}
 .movies-button{
   position: absolute;
-  bottom: 2rem;
+  bottom: 5rem;
+  font-size: 1.3rem;
+}
+.movie-img{
+  height: 40rem;
+  width: auto;
+  border-radius: 1rem;
+}
+
+.movielist{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  top: 90%;
+}
+.movie-rating{
+  position: absolute;
+  bottom: 1rem;
+  left:1.5rem;
+  bottom: 1rem;
+  color: white;
+  font-size: 1.5rem;
 }
 .genere-selector{
   padding-top: 3rem;
@@ -92,4 +121,40 @@
 }
 .genre{
   cursor: pointer;
+}
+.green{
+  color: greenyellow;
+}
+.orange{
+  color: rgb(252, 238, 114);
+}
+.red{
+  color: red;
+  
+}
+.navbar{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.nav-link{
+  display: flex;
+  padding-left:5%;
+}
+.nav-search{
+  display: flex;
+  margin-right: 7%;
+}
+.homebtn{
+  font-size: x-large;
+}
+.modal{
+  
+  background-color: white;
+  width: 18rem;
+  height: auto;
+  left:50%;
+  top:8rem;
+  position: absolute;
+  border-radius: 1rem;
 }
