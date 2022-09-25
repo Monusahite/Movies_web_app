@@ -67,8 +67,8 @@
 
 .allmoviecards{
   position: relative;
-  width: 40vh;
-  height: 35vh;
+  width: 45vh;
+  height: 40vh;
   border: none;
   
   margin: 2vw;
@@ -89,7 +89,7 @@
 .movies-button{
   position: absolute;
   bottom: 5rem;
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 .movie-img{
   height: 40rem;
@@ -111,7 +111,7 @@
   left:1.5rem;
   bottom: 1rem;
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 .genere-selector{
   padding-top: 3rem;
@@ -135,7 +135,7 @@
 .navbar{
   display: flex;
   align-items: center;
-  padding-top:1%;
+  margin-top:2%;
 }
 .nav-link{
   display: flex;
@@ -159,11 +159,12 @@
   box-sizing: border-box;
   overflow-y: scroll; 
   padding: 1rem;
+  border:1px solid rgb(157, 153, 153);
 
   /* scroll-behavior: smooth; */
   /* Add the ability to scroll */
   left:50%;
-  top:8rem;
+  top:5rem;
   border-radius: 1rem;
   z-index: 1rem;
   position: absolute;
@@ -179,6 +180,42 @@ scrollbar-width: none;  /* Firefox */
 }
 .search-bar{
   position: absolute;
-  top:2%;
+  top:1%;
   right: 5%;
+}
+
+
+/* new */
+.overview-movie-img{
+  width: 25rem;
+  height: 30rem;
+  border-radius: 1rem;
+}
+.overview-card{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 3rem;
+}
+.movie-overview{
+  position: absolute;
+  bottom: 1rem;
+  right:1rem;
+
+}
+.overview-poster{
+  padding-left: 3rem;
+}
+.light{
+  color: rgb(122, 119, 119);
+  padding: 0.5rem;
+}
+.overview{
+  padding-bottom: 2rem;
+}
+.overview-title{
+  padding-top:1.5rem;
+  padding-bottom:1.5rem;
+}
+.overview-text{
+  padding:2rem;
 }
